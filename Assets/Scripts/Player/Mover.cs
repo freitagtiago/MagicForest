@@ -7,65 +7,47 @@ public class Mover : MonoBehaviour
     Rigidbody2D rig;
     SpriteRenderer rend;
     Animator anim;
+    float defaultGravity;
 
     [SerializeField] bool canMove = true;
-    [SerializeField] bool isGrounded = true;
 
     [SerializeField] float walkSpeed = 4f;
     [SerializeField] float runSpeed = 8f;
-    [SerializeField] float jumpForce = 5f;
+    [SerializeField] float jumpSped = 5f;
+    [SerializeField] float climbSpeed = 5f;
 
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] Collider2D playerCollider;
-
-    float horizontalInput;
-    float verticalInput;
+    [SerializeField] CapsuleCollider2D playerCollider;
+    [SerializeField] BoxCollider2D feetCollider;
 
     private void Awake()
     {
         rig = GetComponent<Rigidbody2D>();
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        if (!playerCollider)
-        {
-            playerCollider = GetComponent<Collider2D>();
-        }
+        playerCollider = GetComponent<CapsuleCollider2D>();
+        feetCollider = GetComponent<BoxCollider2D>();
+    }
+    private void Start()
+    {
+        defaultGravity = rig.gravityScale;
     }
 
     private void FixedUpdate()
     {
         if (canMove)
         {
-            isGrounded = Physics2D.IsTouchingLayers(playerCollider, groundLayer);
-            CheckInputs();
-            ProcessInputs();
-            ProcessAnimation();
-        }
-    }
-
-    private void CheckInputs()
-    {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-    }
-
-    private void ProcessInputs()
-    {
-        float xVelocity = horizontalInput;
-        float yVelocity = rig.velocity.y;
-
-        if (isGrounded)
-        {
-            xVelocity = WalkAndRun(xVelocity);
-            rig.velocity = (new Vector2(xVelocity, yVelocity));
+            WalkAndRun();
             Jump();
+            ClimbLadder();
+            ProcessAnimation();
         }
     }
 
     private void ProcessAnimation()
     {
-        if (isGrounded) 
+        if (IsGrounded()) 
         {
+            anim.SetBool("climbing", false);
             anim.SetBool("jumping", false);
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
             {
@@ -92,12 +74,28 @@ public class Mover : MonoBehaviour
         else
         {
             anim.SetBool("walking", false);
+            anim.SetBool("climbing", false);
         }
+        if (IsOnLadder())
+        {
+            bool isMovingVertical = Mathf.Abs(rig.velocity.y) > Mathf.Epsilon;
+            anim.SetFloat("yValue", Input.GetAxisRaw("Vertical"));
+            anim.SetBool("walking", false);
+            anim.SetBool("running", false);
+            anim.SetBool("jumping", false);
+            anim.SetBool("climbing", true);
+        }
+
         FlipSprite();
     }
 
-    private float WalkAndRun(float xVelocity)
+    private void WalkAndRun()
     {
+        if(!IsGrounded()) { return; }
+
+        float xVelocity = Input.GetAxisRaw("Horizontal");
+        float yVelocity = rig.velocity.y;
+
         if (CheckIfIsRunning())
         {
             xVelocity *= runSpeed;
@@ -107,30 +105,57 @@ public class Mover : MonoBehaviour
             xVelocity *= walkSpeed;
         }
 
-        return xVelocity;
+        rig.velocity = (new Vector2(xVelocity, yVelocity));
     }
 
     private void Jump()
     {
+        if (!IsGrounded()) { return; }
+
         if (Input.GetKey(KeyCode.Space))
         {
-            Vector2 jumpVelocity = new Vector2(0f, jumpForce);
+            Vector2 jumpVelocity = new Vector2(0f, jumpSped);
             rig.velocity += jumpVelocity;
         }
+    }
+
+    private void ClimbLadder()
+    {
+        if(!IsOnLadder()) 
+        {
+            rig.gravityScale = defaultGravity;
+            rig.isKinematic = false;
+            return; 
+        }
+
+        rig.gravityScale = 0;
+        rig.isKinematic = true;
+        float yVelocity = Input.GetAxisRaw("Vertical");
+        float xVelocity = Input.GetAxisRaw("Horizontal");
+        Vector2 climbVelocity = new Vector2(xVelocity, yVelocity * climbSpeed);
+        rig.velocity = climbVelocity;
     }
 
     private bool CheckIfIsRunning()
     {
         if (Input.GetKey(KeyCode.B))
         {
-            Debug.Log("SEGURANDO B");
             return true;
         }
         else
         {
-            Debug.Log("SOLTANDO B");
             return false;
         }
+    }
+
+    private bool IsGrounded()
+    {
+        return feetCollider.IsTouchingLayers(LayerMask.GetMask("Walkable"));
+    }
+
+    private bool IsOnLadder()
+    {
+        return playerCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
     }
 
     private void FlipSprite()
@@ -142,8 +167,8 @@ public class Mover : MonoBehaviour
         }
     }
 
-    public void CancelMovement()
+    public void SetCanMove(bool value)
     {
-        canMove = false;
+        canMove = value;
     }
 }

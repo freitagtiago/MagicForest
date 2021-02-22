@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - Walkable
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ladder
+  - Player
+  - Background
+  - Enemy
+  - Hazards
+  - Interactables
   - 
   - 
   - 
@@ -44,9 +44,21 @@ TagManager:
   - name: Background
     uniqueID: 3259677123
     locked: 0
+  - name: Hazards
+    uniqueID: 3640008713
+    locked: 0
   - name: Foreground
     uniqueID: 4016916219
     locked: 0
+  - name: Ladder
+    uniqueID: 1512155395
+    locked: 0
+  - name: Enemy
+    uniqueID: 610522391
+    locked: 0
   - name: Player
     uniqueID: 1515032765
+    locked: 0
+  - name: Interactables
+    uniqueID: 183186971
     locked: 0
