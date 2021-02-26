@@ -5,13 +5,12 @@ using UnityEngine;
 public class BasicMovement : MonoBehaviour
 {
     Rigidbody2D rig;
-    CircleCollider2D groundCollider;
+    [SerializeField] CircleCollider2D groundCollider;
     [SerializeField] float moveSpeed = 1f;
 
     private void Awake()
     {
         rig = GetComponent<Rigidbody2D>();
-        groundCollider = GetComponent<CircleCollider2D>();
     }
 
     void Start()

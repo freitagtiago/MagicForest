@@ -18,7 +18,7 @@ TagManager:
   - Enemy
   - Hazards
   - Interactables
-  - 
+  - Player Attack
   - 
   - 
   - 
@@ -56,9 +56,15 @@ TagManager:
   - name: Enemy
     uniqueID: 610522391
     locked: 0
+  - name: Interactables
+    uniqueID: 183186971
+    locked: 0
   - name: Player
     uniqueID: 1515032765
     locked: 0
-  - name: Interactables
-    uniqueID: 183186971
+  - name: ScrollingLevel
+    uniqueID: 3451582449
+    locked: 0
+  - name: Attack
+    uniqueID: 3470858703
     locked: 0

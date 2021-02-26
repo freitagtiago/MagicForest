@@ -7,14 +7,24 @@ public class Mover : MonoBehaviour
     Rigidbody2D rig;
     SpriteRenderer rend;
     Animator anim;
-    float defaultGravity;
 
     [SerializeField] bool canMove = true;
 
+    [SerializeField] float verticalInput;
+    [SerializeField] float horizontalInput;
+    
     [SerializeField] float walkSpeed = 4f;
     [SerializeField] float runSpeed = 8f;
     [SerializeField] float jumpSped = 5f;
-    [SerializeField] float climbSpeed = 5f;
+
+    [SerializeField] AudioClip audioJump;
+
+    [Header("Ladder Movement Config")]
+    [SerializeField] float climbSpeed = 1f;
+    [SerializeField] float distanceFromMiddleCollider = 0.7f;
+    [SerializeField] float topDistanceFromMiddleCollider = 0.3f;
+    [SerializeField] float checkRadius = 0.3f;
+    bool movingOnLadder = false;
 
     [SerializeField] CapsuleCollider2D playerCollider;
     [SerializeField] BoxCollider2D feetCollider;
@@ -27,15 +37,12 @@ public class Mover : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider2D>();
         feetCollider = GetComponent<BoxCollider2D>();
     }
-    private void Start()
-    {
-        defaultGravity = rig.gravityScale;
-    }
 
     private void FixedUpdate()
     {
         if (canMove)
         {
+            GetInputs();
             WalkAndRun();
             Jump();
             ClimbLadder();
@@ -43,11 +50,16 @@ public class Mover : MonoBehaviour
         }
     }
 
+    private void GetInputs()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
     private void ProcessAnimation()
     {
-        if (IsGrounded()) 
+        if (IsGrounded())
         {
-            anim.SetBool("climbing", false);
             anim.SetBool("jumping", false);
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
             {
@@ -68,30 +80,21 @@ public class Mover : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Space))
             {
+                anim.SetBool("walking", false);
+                anim.SetBool("running", false);
                 anim.SetBool("jumping", true);
             }
         }
         else
         {
             anim.SetBool("walking", false);
-            anim.SetBool("climbing", false);
         }
-        if (IsOnLadder())
-        {
-            bool isMovingVertical = Mathf.Abs(rig.velocity.y) > Mathf.Epsilon;
-            anim.SetFloat("yValue", Input.GetAxisRaw("Vertical"));
-            anim.SetBool("walking", false);
-            anim.SetBool("running", false);
-            anim.SetBool("jumping", false);
-            anim.SetBool("climbing", true);
-        }
-
         FlipSprite();
     }
 
     private void WalkAndRun()
     {
-        if(!IsGrounded()) { return; }
+        if(!IsGrounded() || movingOnLadder) { return; }
 
         float xVelocity = Input.GetAxisRaw("Horizontal");
         float yVelocity = rig.velocity.y;
@@ -110,30 +113,74 @@ public class Mover : MonoBehaviour
 
     private void Jump()
     {
-        if (!IsGrounded()) { return; }
+        if (!IsGrounded()) 
+        {
+            if(movingOnLadder){
+                return;
+            }
+            Vector2 jumpVelocity = new Vector2(horizontalInput * walkSpeed, rig.velocity.y);
+            rig.velocity = jumpVelocity;
+
+            return; 
+        }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            Vector2 jumpVelocity = new Vector2(0f, jumpSped);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            Vector2 jumpVelocity = new Vector2(horizontalInput, jumpSped);
             rig.velocity += jumpVelocity;
+            AudioSource.PlayClipAtPoint(audioJump, Camera.main.transform.position);
         }
     }
 
     private void ClimbLadder()
     {
-        if(!IsOnLadder()) 
+        if (!IsOnLadder())
         {
-            rig.gravityScale = defaultGravity;
+            anim.SetBool("climbing", false);
             rig.isKinematic = false;
-            return; 
+            movingOnLadder = false;
+            return;
         }
 
-        rig.gravityScale = 0;
-        rig.isKinematic = true;
-        float yVelocity = Input.GetAxisRaw("Vertical");
-        float xVelocity = Input.GetAxisRaw("Horizontal");
-        Vector2 climbVelocity = new Vector2(xVelocity, yVelocity * climbSpeed);
-        rig.velocity = climbVelocity;
+        bool ladderTop = Physics2D.OverlapCircle(transform.position + new Vector3(0, topDistanceFromMiddleCollider, 0), checkRadius, LayerMask.GetMask("Ladder"));
+        bool ladderBottom = Physics2D.OverlapCircle(transform.position + new Vector3(0, -distanceFromMiddleCollider, 0), checkRadius, LayerMask.GetMask("Ladder"));
+
+        if(verticalInput !=0)
+        {
+            rig.isKinematic = true;
+            movingOnLadder = true;
+        }
+
+        if (movingOnLadder)
+        {
+            if (!ladderTop && verticalInput > 0f)
+            {
+                FinishClimb();
+                return;
+            }
+
+            if (!ladderBottom && verticalInput < 0f)
+            {
+                FinishClimb();
+                return;
+            }
+
+            anim.SetFloat("yValue", verticalInput);
+            anim.SetBool("jumping", false);
+            anim.SetBool("climbing", true);
+
+            Vector2 climbVelocity = new Vector2(0, verticalInput * climbSpeed);
+            rig.velocity = climbVelocity;
+        }
+    }
+
+    private void FinishClimb()
+    {
+        movingOnLadder = false;
+        rig.isKinematic = false;
+        anim.SetBool("climbing", false);
+        anim.SetFloat("yValue", 0);
     }
 
     private bool CheckIfIsRunning()
@@ -170,5 +217,16 @@ public class Mover : MonoBehaviour
     public void SetCanMove(bool value)
     {
         canMove = value;
+    }
+
+
+
+
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0, topDistanceFromMiddleCollider, 0), checkRadius);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0, -distanceFromMiddleCollider, 0), checkRadius);
     }
 }
