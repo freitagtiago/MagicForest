@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameSession : MonoBehaviour
 {
     [SerializeField] int currentLives;
-
     [SerializeField] int coins;
-    UIHandler uiHandler;
+    [SerializeField] UIHandler uiHandler;
     private void Awake()
     {
         int countGameSession = FindObjectsOfType<GameSession>().Length;
@@ -26,8 +24,7 @@ public class GameSession : MonoBehaviour
 
     private void Start()
     {
-        uiHandler.UpdateCoins(coins);
-        uiHandler.UpdateLives(currentLives);
+        UpdateDisplays();
     }
 
     private void TakeLife()
@@ -39,11 +36,18 @@ public class GameSession : MonoBehaviour
     private IEnumerator ReloadCurrentScene()
     {
         yield return new WaitForSeconds(1.5f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneLoader.instance.LoadSceneNow(SceneLoader.instance.GetCurrentActiveScene());
     }
+
+    public void UpdateDisplays()
+    {
+        uiHandler.UpdateCoins(coins);
+        uiHandler.UpdateLives(currentLives);
+    }
+
     private void ResetGameSession()
     {
-        SceneManager.LoadScene(0);
+        SceneLoader.instance.LoadSceneNow(0);
         Destroy(this.gameObject);
     }
 
@@ -75,4 +79,11 @@ public class GameSession : MonoBehaviour
     {
         return currentLives;
     }
+
+    public void SetUIHandler(UIHandler ui)
+    {
+        uiHandler = ui;
+        UpdateDisplays();
+    }
+
 }

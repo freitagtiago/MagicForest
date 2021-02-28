@@ -10,17 +10,6 @@ public class TouchPlayer : MonoBehaviour
         PlayerHealth player = other.GetComponent<PlayerHealth>();
         if (player)
         {
-            Debug.Log("encostou no player");
-            player.TakeDamage(damage);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        PlayerHealth player = other.GetComponent<PlayerHealth>();
-        if (player)
-        {
-            Debug.Log("encostou no player");
             player.TakeDamage(damage);
         }
     }

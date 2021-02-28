@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ScenePersist : MonoBehaviour
 {
@@ -21,14 +20,14 @@ public class ScenePersist : MonoBehaviour
 
     private void Start()
     {
-        startingSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        startingSceneIndex = SceneLoader.instance.GetCurrentActiveScene();
     }
 
     private void Update()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int currentSceneIndex = SceneLoader.instance.GetCurrentActiveScene();
 
-        if(currentSceneIndex != startingSceneIndex)
+        if (currentSceneIndex != startingSceneIndex)
         {
             Destroy(gameObject);
         }

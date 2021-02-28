@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class LevelExit : MonoBehaviour
@@ -39,6 +38,7 @@ public class LevelExit : MonoBehaviour
         GameObject fx = Instantiate(visualFX, transform.position, Quaternion.identity);
         fx.transform.parent = transform;
         yield return new WaitForSeconds(timeToLoad);
-        SceneManager.LoadScene(nextScene);
+        SceneLoader.instance.LoadSceneNow(nextScene);
+        FindObjectOfType<GameSession>().UpdateDisplays();
     }
 }

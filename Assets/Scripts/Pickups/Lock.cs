@@ -12,6 +12,7 @@ public class Lock : MonoBehaviour
     [SerializeField] AudioClip[] audios;
     [SerializeField] AudioClip unlockAudio;
     [SerializeField] ParticleSystem particles;
+
     private void Start()
     {
         totalAmountOfPurpleCoins = transform.childCount;
@@ -27,8 +28,7 @@ public class Lock : MonoBehaviour
     private IEnumerator UnlockExit()
     {
         AudioSource.PlayClipAtPoint(unlockAudio, Camera.main.transform.position);
-        ParticleSystem.MainModule mainModule = particles.main;
-        mainModule.loop = false;
+        particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         yield return new WaitForSeconds(timeToWait);
         unlockExit.Invoke();
     }

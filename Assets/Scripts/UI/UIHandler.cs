@@ -14,8 +14,7 @@ public class UIHandler : MonoBehaviour
     private void Start()
     {
         GameSession gs = FindObjectOfType<GameSession>();
-        UpdateLives(gs.GetLives());
-        UpdateCoins(gs.GetCoins());
+        gs?.SetUIHandler(this);
     }
 
     public void UpdateLives(int lives)

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 public class Menu : MonoBehaviour
 {
@@ -21,16 +20,18 @@ public class Menu : MonoBehaviour
 
     private void Awake()
     {
-        isStartScene = (SceneManager.GetActiveScene().buildIndex == 0);
-        if (!isStartScene)
-        {
-            gameSession = FindObjectOfType<GameSession>().gameObject;
-            progress = FindObjectOfType<ScenePersist>().gameObject;
-        }
+       
     }
 
     private void Start()
     {
+        isStartScene = (SceneLoader.instance.GetCurrentActiveScene() == 0);
+        if (!isStartScene)
+        {
+            gameSession = FindObjectOfType<GameSession>()?.gameObject;
+            progress = FindObjectOfType<ScenePersist>()?.gameObject;
+        }
+
         if (isStartScene) return;
 
         StartCoroutine(ShowLevelInfo());
@@ -57,8 +58,8 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 0;
         levelInfoPanel.SetActive(true);
-        levelNameText.text = levelName[SceneManager.GetActiveScene().buildIndex - 1];
-        levelInfoText.text = levelInfo[SceneManager.GetActiveScene().buildIndex - 1];
+        levelNameText.text = levelName[SceneLoader.instance.GetCurrentActiveScene() - 1];
+        levelInfoText.text = levelInfo[SceneLoader.instance.GetCurrentActiveScene() - 1];
         yield return new WaitForSecondsRealtime(timeToStartLevel);
         levelInfoPanel.SetActive(false);
         Time.timeScale = 1;
@@ -66,7 +67,7 @@ public class Menu : MonoBehaviour
 
     public void StartFirstLevel() 
     {
-        SceneManager.LoadScene(1);
+        SceneLoader.instance.LoadSceneNow(1);
     }
 
     public void OpenMenu()
@@ -79,7 +80,7 @@ public class Menu : MonoBehaviour
     {
         Destroy(progress);
         Destroy(gameSession);
-        SceneManager.LoadScene(1);
+        SceneLoader.instance.LoadSceneNow(1);
     }
 
     public void Resume()
@@ -90,6 +91,6 @@ public class Menu : MonoBehaviour
 
     public void Quit()
     {
-        SceneManager.LoadScene(0);
+        SceneLoader.instance.LoadSceneNow(0);
     }
 }

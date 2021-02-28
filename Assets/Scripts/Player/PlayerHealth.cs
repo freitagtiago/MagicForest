@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] int currentHealth;
     [SerializeField] float invulnerabilityTime = 0.6f;
     [SerializeField] float damagedTime = 0.3f;
+    [SerializeField] AudioClip audioHurt;
 
     CapsuleCollider2D playerCollider;
     Animator anim;
@@ -84,6 +85,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
+            AudioSource.PlayClipAtPoint(audioHurt, Camera.main.transform.position);
             currentHealth--;
         }
         ui.UpdateHealth(currentHealth);

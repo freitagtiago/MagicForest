@@ -13,11 +13,6 @@ public class BasicMovement : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         if (IsFacingRight())

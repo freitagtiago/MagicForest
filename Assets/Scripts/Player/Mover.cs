@@ -7,6 +7,7 @@ public class Mover : MonoBehaviour
     Rigidbody2D rig;
     SpriteRenderer rend;
     Animator anim;
+    AudioSource audioSource;
 
     [SerializeField] bool canMove = true;
 
@@ -34,10 +35,11 @@ public class Mover : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         playerCollider = GetComponent<CapsuleCollider2D>();
         feetCollider = GetComponent<BoxCollider2D>();
     }
-
+    
     private void FixedUpdate()
     {
         if (canMove)
@@ -129,7 +131,11 @@ public class Mover : MonoBehaviour
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             Vector2 jumpVelocity = new Vector2(horizontalInput, jumpSped);
             rig.velocity += jumpVelocity;
-            AudioSource.PlayClipAtPoint(audioJump, Camera.main.transform.position);
+
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(audioJump);
+            }
         }
     }
 
@@ -168,6 +174,8 @@ public class Mover : MonoBehaviour
 
             anim.SetFloat("yValue", verticalInput);
             anim.SetBool("jumping", false);
+            anim.SetBool("walking", false);
+            anim.SetBool("running", false);
             anim.SetBool("climbing", true);
 
             Vector2 climbVelocity = new Vector2(0, verticalInput * climbSpeed);
@@ -213,12 +221,21 @@ public class Mover : MonoBehaviour
             transform.localScale = new Vector2(Mathf.Sign(rig.velocity.x),1f);
         }
     }
-
     public void SetCanMove(bool value)
     {
         canMove = value;
     }
+    public void SpecialJump(float impulse)
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        Vector2 jumpVelocity = new Vector2(horizontalInput, impulse);
+        rig.velocity += jumpVelocity;
 
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(audioJump);
+        }
+    }
 
 
 
