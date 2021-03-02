@@ -5,6 +5,7 @@ using TMPro;
 public class Menu : MonoBehaviour
 {
     bool isStartScene = false;
+    bool isWinScene = false;
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject levelInfoPanel;
 
@@ -26,13 +27,14 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         isStartScene = (SceneLoader.instance.GetCurrentActiveScene() == 0);
+        isWinScene = (SceneLoader.instance.GetCurrentActiveScene() == 5);
         if (!isStartScene)
         {
             gameSession = FindObjectOfType<GameSession>()?.gameObject;
             progress = FindObjectOfType<ScenePersist>()?.gameObject;
         }
 
-        if (isStartScene) return;
+        if (isStartScene || isWinScene) return;
 
         StartCoroutine(ShowLevelInfo());
     }
@@ -80,7 +82,7 @@ public class Menu : MonoBehaviour
     {
         Destroy(progress);
         Destroy(gameSession);
-        SceneLoader.instance.LoadSceneNow(1);
+        SceneLoader.instance.LoadSceneNow(SceneLoader.instance.GetCurrentActiveScene());
     }
 
     public void Resume()

@@ -9,7 +9,8 @@ public class HealthPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         other.GetComponent<PlayerHealth>()?.Heal(amount);
-        AudioSource.PlayClipAtPoint(recoveryAudio, Camera.main.transform.position);
+        AudioFXPlayer.fxPlayer.PlaySoundOnCamera(recoveryAudio);
+        //AudioSource.PlayClipAtPoint(recoveryAudio, Camera.main.transform.position);
         Destroy(gameObject);
     }
 }

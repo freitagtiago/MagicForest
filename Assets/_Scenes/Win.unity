@@ -347,6 +347,16 @@ Tilemap:
   - first: {x: -10, y: 3, z: 0}
     second:
       serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -10, y: 4, z: 0}
+    second:
+      serializedVersion: 2
       m_TileIndex: 1
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
@@ -360,7 +370,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: aa2cbc31c9f94a34185c292a7e53ac5d, type: 2}
-  - m_RefCount: 6
+  - m_RefCount: 7
     m_Data: {fileID: 11400000, guid: fe4e1ecedffe2f24a85607846cae51bc, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 559a83cc7f1fef34ea3d80efb937e824, type: 2}
@@ -369,12 +379,12 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 5266067843512441219, guid: ff45a3343e7aef949aeaafed3d175d20, type: 3}
-  - m_RefCount: 6
+  - m_RefCount: 7
     m_Data: {fileID: -8668667915580905653, guid: ff45a3343e7aef949aeaafed3d175d20, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -998132925701905241, guid: ff45a3343e7aef949aeaafed3d175d20, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 8
+  - m_RefCount: 9
     m_Data:
       e00: 1
       e01: 0
@@ -393,7 +403,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 8
+  - m_RefCount: 9
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -457,7 +467,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -475,8 +485,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -1206,7 +1216,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -5272,10 +5282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -5337,6 +5347,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c766a274f8c27d49a56854e0352e217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuPanel: {fileID: 0}
+  levelInfoPanel: {fileID: 0}
+  levelNameText: {fileID: 0}
+  levelInfoText: {fileID: 0}
+  timeToStartLevel: 3
+  progress: {fileID: 0}
+  gameSession: {fileID: 0}
+  levelName: []
+  levelInfo: []
 --- !u!1 &410162282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5375,7 +5394,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5393,8 +5412,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -6124,7 +6143,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -10141,6 +10160,63 @@ Transform:
   m_Father: {fileID: 1633485881}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1001 &434304247
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091198, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4363346372425091199, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
+      propertyPath: m_Name
+      value: BG
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 51d12b4370f3cfa47b61dd48ac0a16ac, type: 3}
 --- !u!1 &462845676
 GameObject:
   m_ObjectHideFlags: 0
@@ -10179,7 +10255,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10197,8 +10273,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -10928,7 +11004,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -15234,7 +15310,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15252,8 +15328,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -15983,7 +16059,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -20038,7 +20114,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20056,8 +20132,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -20787,7 +20863,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -27849,7 +27925,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27867,8 +27943,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -28598,7 +28674,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -32804,7 +32880,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -32822,8 +32898,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -33553,7 +33629,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -37642,6 +37718,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1424619906}
     - target: {fileID: 778166402981484454, guid: 0026a1303472ff4468f34802cc4e4dc5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 778166402981484454, guid: 0026a1303472ff4468f34802cc4e4dc5, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.47
       objectReference: {fileID: 0}
@@ -38474,7 +38554,7 @@ ParticleSystem:
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
     alignToDirection: 0
-    m_Texture: {fileID: 2800000, guid: 07a5744b000c78c44aa1a06f10905893, type: 3}
+    m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
     m_TextureUVChannel: 0
@@ -42572,7 +42652,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 080f6b3c820549c46a44e6411ae18e42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -42590,8 +42670,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183186971
-  m_SortingLayer: 7
+  m_SortingLayerID: -824108593
+  m_SortingLayer: 9
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0

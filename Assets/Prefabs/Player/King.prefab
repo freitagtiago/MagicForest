@@ -14,10 +14,11 @@ GameObject:
   - component: {fileID: 907483556}
   - component: {fileID: 907483555}
   - component: {fileID: 1424619907}
-  - component: {fileID: 907483560}
   - component: {fileID: 4153938102180364295}
+  - component: {fileID: 907483560}
   - component: {fileID: 5833807543324915051}
   - component: {fileID: 6026039221334928383}
+  - component: {fileID: 985460753}
   m_Layer: 8
   m_Name: King
   m_TagString: Player
@@ -144,8 +145,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.12}
-  m_Size: {x: 0.5404396, y: 0.7533511}
+  m_Offset: {x: 0, y: -0.13982949}
+  m_Size: {x: 0.5404396, y: 0.79301006}
   m_Direction: 0
 --- !u!61 &1424619907
 BoxCollider2D:
@@ -160,7 +161,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.021363378, y: -0.23975158}
+  m_Offset: {x: 0.021363378, y: -0.21776044}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -171,33 +172,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.23702693, y: 0.52881}
+  m_Size: {x: 0.23702693, y: 0.6392858}
   m_EdgeRadius: 0
---- !u!114 &907483560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3673774557778395980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0327e91127c7974a8996ab6f6079429, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canMove: 1
-  verticalInput: 0
-  horizontalInput: 0
-  walkSpeed: 4
-  runSpeed: 7
-  jumpSped: 3
-  audioJump: {fileID: 8300000, guid: b7173700891cb86448de734a666e056b, type: 3}
-  climbSpeed: 3
-  distanceFromMiddleCollider: 0.7
-  topDistanceFromMiddleCollider: 0.2
-  checkRadius: 0.1
-  playerCollider: {fileID: 907483555}
-  feetCollider: {fileID: 1424619907}
 --- !u!82 &4153938102180364295
 AudioSource:
   m_ObjectHideFlags: 0
@@ -294,6 +270,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &907483560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673774557778395980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0327e91127c7974a8996ab6f6079429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 1
+  verticalInput: 0
+  horizontalInput: 0
+  walkSpeed: 4
+  runSpeed: 7
+  jumpSped: 6
+  audioJump: {fileID: 8300000, guid: b7173700891cb86448de734a666e056b, type: 3}
+  climbSpeed: 3
+  distanceFromMiddleCollider: 0.7
+  topDistanceFromMiddleCollider: 0.2
+  checkRadius: 0.1
+  playerCollider: {fileID: 907483555}
+  feetCollider: {fileID: 1424619907}
 --- !u!114 &5833807543324915051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +330,20 @@ MonoBehaviour:
   attackPrefab: {fileID: 8328088543133351775, guid: aa8b9c67700343046864fff4f9ae6f46, type: 3}
   handPos: {fileID: 5551348554914964180}
   attackSound: {fileID: 8300000, guid: b2d9f1a959d4046489e17d2cc0969ea8, type: 3}
+--- !u!114 &985460753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3673774557778395980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bee494e4c403994da5a742e2571cfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 0.5
+  isPushing: 0
 --- !u!1 &8922247602358621832
 GameObject:
   m_ObjectHideFlags: 0

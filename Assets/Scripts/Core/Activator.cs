@@ -13,10 +13,12 @@ public class Activator : MonoBehaviour
         if (box) 
         {
             active = true;
-            AudioSource.PlayClipAtPoint(audio, Camera.main.transform.position);
+            //AudioSource.PlayClipAtPoint(audio, Camera.main.transform.position);
+            AudioFXPlayer.fxPlayer.PlaySoundOnCamera(audio);
             ParticleSystem particles = GetComponent<ParticleSystem>();
             particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             FindObjectOfType<Quests>().CompleteStep();
+            Destroy(this);
         }    
     }
 }

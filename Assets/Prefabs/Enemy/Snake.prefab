@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 4345195796736060605}
   - component: {fileID: 4345195796736060602}
   - component: {fileID: 4345195796736060603}
-  - component: {fileID: 4345195796736060607}
   - component: {fileID: 4345195796736060604}
   - component: {fileID: 4345195796736060593}
   - component: {fileID: 4345195796736060606}
   - component: {fileID: 1945667292}
   - component: {fileID: 1945667291}
   - component: {fileID: 1945667293}
+  - component: {fileID: 1718864814942530146}
   m_Layer: 10
   m_Name: Snake
   m_TagString: Untagged
@@ -109,27 +109,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!50 &4345195796736060607
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4345195796736060600}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &4345195796736060604
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,3 +222,24 @@ MonoBehaviour:
   invulnerabilityTime: 0.5
   blinkTime: 0.25
   blinkTo: {r: 1, g: 0, b: 0, a: 1}
+--- !u!50 &1718864814942530146
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345195796736060600}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

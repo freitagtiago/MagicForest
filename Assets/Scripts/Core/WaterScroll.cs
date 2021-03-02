@@ -13,7 +13,7 @@ public class WaterScroll : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
-            float yMove = scrollRate * Time.fixedDeltaTime;
+            float yMove = scrollRate * Time.deltaTime;
             transform.Translate(new Vector2(0f, yMove));
         }
     }

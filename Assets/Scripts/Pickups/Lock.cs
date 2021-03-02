@@ -22,14 +22,14 @@ public class Lock : MonoBehaviour
     {
         int audioIndex = collectedPurpleCoins - 1;
 
-        AudioSource.PlayClipAtPoint(audios[audioIndex], Camera.main.transform.position);
+        AudioFXPlayer.fxPlayer.PlaySoundOnCamera(audios[audioIndex]);
     }
 
     private IEnumerator UnlockExit()
     {
-        AudioSource.PlayClipAtPoint(unlockAudio, Camera.main.transform.position);
+        AudioFXPlayer.fxPlayer.PlaySoundOnCamera(unlockAudio);
         particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        yield return new WaitForSeconds(timeToWait);
+        yield return new WaitForSecondsRealtime(timeToWait);
         unlockExit.Invoke();
     }
 

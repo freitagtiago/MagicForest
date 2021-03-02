@@ -130,8 +130,7 @@ public class Mover : MonoBehaviour
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             Vector2 jumpVelocity = new Vector2(horizontalInput, jumpSped);
-            rig.velocity += jumpVelocity;
-
+            rig.velocity = jumpVelocity;
             if (!audioSource.isPlaying)
             {
                 audioSource.PlayOneShot(audioJump);
@@ -229,17 +228,13 @@ public class Mover : MonoBehaviour
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         Vector2 jumpVelocity = new Vector2(horizontalInput, impulse);
-        rig.velocity += jumpVelocity;
+        rig.velocity = jumpVelocity;
 
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(audioJump);
         }
     }
-
-
-
-
 
     private void OnDrawGizmos()
     {
