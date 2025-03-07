@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader instance;
-    MusicPlayer musicPlayer;
+    public static SceneLoader Instance;
+    private MusicPlayer _musicPlayer;
 
     private void Awake()
     {
-        if(FindObjectsOfType<SceneLoader>().Length > 1)
+        if(Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        musicPlayer = FindObjectOfType<MusicPlayer>();
+        _musicPlayer = FindObjectOfType<MusicPlayer>();
     }
 
     public void LoadSceneNow(int sceneIndex)
@@ -41,7 +42,7 @@ public class SceneLoader : MonoBehaviour
             }
         }
         SceneManager.LoadScene(sceneIndex);
-        MusicPlayer.instance.PlayMusic(sceneIndex);
+        MusicPlayer.Instance.PlayMusic(sceneIndex);
     }
 
     public int GetCurrentActiveScene()

@@ -26,8 +26,8 @@ public class Menu : MonoBehaviour
 
     private void Start()
     {
-        isStartScene = (SceneLoader.instance.GetCurrentActiveScene() == 0);
-        isWinScene = (SceneLoader.instance.GetCurrentActiveScene() == 5);
+        isStartScene = (SceneLoader.Instance.GetCurrentActiveScene() == 0);
+        isWinScene = (SceneLoader.Instance.GetCurrentActiveScene() == 5);
         if (!isStartScene)
         {
             gameSession = FindObjectOfType<GameSession>()?.gameObject;
@@ -60,8 +60,8 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 0;
         levelInfoPanel.SetActive(true);
-        levelNameText.text = levelName[SceneLoader.instance.GetCurrentActiveScene() - 1];
-        levelInfoText.text = levelInfo[SceneLoader.instance.GetCurrentActiveScene() - 1];
+        levelNameText.text = levelName[SceneLoader.Instance.GetCurrentActiveScene() - 1];
+        levelInfoText.text = levelInfo[SceneLoader.Instance.GetCurrentActiveScene() - 1];
         yield return new WaitForSecondsRealtime(timeToStartLevel);
         levelInfoPanel.SetActive(false);
         Time.timeScale = 1;
@@ -69,7 +69,7 @@ public class Menu : MonoBehaviour
 
     public void StartFirstLevel() 
     {
-        SceneLoader.instance.LoadSceneNow(1);
+        SceneLoader.Instance.LoadSceneNow(1);
     }
 
     public void OpenMenu()
@@ -82,7 +82,7 @@ public class Menu : MonoBehaviour
     {
         Destroy(progress);
         Destroy(gameSession);
-        SceneLoader.instance.LoadSceneNow(SceneLoader.instance.GetCurrentActiveScene());
+        SceneLoader.Instance.LoadSceneNow(SceneLoader.Instance.GetCurrentActiveScene());
     }
 
     public void Resume()
@@ -93,6 +93,6 @@ public class Menu : MonoBehaviour
 
     public void Quit()
     {
-        SceneLoader.instance.LoadSceneNow(0);
+        SceneLoader.Instance.LoadSceneNow(0);
     }
 }

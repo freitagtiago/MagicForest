@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
 {
+    public static MusicPlayer Instance;
+    [SerializeField] List<AudioClip> _musicList;
 
-    [SerializeField] List<AudioClip> musicList;
-
-    public static MusicPlayer instance;
-    AudioSource audioSource;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
-        if (FindObjectsOfType<MusicPlayer>().Length > 1)
+        if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
 
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -32,9 +32,12 @@ public class MusicPlayer : MonoBehaviour
 
     public void PlayMusic(int index)
     {
-        if (audioSource.isPlaying) { audioSource.Stop(); }
+        if (_audioSource.isPlaying) 
+        { 
+            _audioSource.Stop(); 
+        }
         
-        audioSource.clip = musicList[index];
-        audioSource.Play();
+        _audioSource.clip = _musicList[index];
+        _audioSource.Play();
     }
 }

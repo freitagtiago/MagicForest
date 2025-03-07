@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class AudioFXPlayer : MonoBehaviour
 {
-    public static AudioFXPlayer fxPlayer;
-    AudioSource audioPlayer;
+    public static AudioFXPlayer Instance;
+    private AudioSource _audioPlayer;
 
     private void Awake()
     {
-        if(fxPlayer != null)
+        if(Instance != null)
         {
             Destroy(this);
         }
         else
         {
-            fxPlayer = this;
+            Instance = this;
         }
-        audioPlayer = GetComponent<AudioSource>();
+        _audioPlayer = GetComponent<AudioSource>();
     }
 
     public void PlaySoundOnCamera(AudioClip audio)
     {
-        audioPlayer.PlayOneShot(audio);
+        _audioPlayer.PlayOneShot(audio);
     }
 }

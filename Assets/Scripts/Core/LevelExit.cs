@@ -38,7 +38,7 @@ public class LevelExit : MonoBehaviour
         GameObject fx = Instantiate(visualFX, transform.position, Quaternion.identity);
         fx.transform.parent = transform;
         yield return new WaitForSeconds(timeToLoad);
-        SceneLoader.instance.LoadSceneNow(nextScene);
+        SceneLoader.Instance.LoadSceneNow(nextScene);
         FindObjectOfType<GameSession>().UpdateDisplays();
     }
 }

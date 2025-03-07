@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    [SerializeField] int damage = 1;
+    [SerializeField] private int damage = 1;
 
     private void Start()
     {

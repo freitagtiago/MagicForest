@@ -6,6 +6,6 @@ public class PlayAgain : MonoBehaviour
 {
     public void LoadFirstLevel()
     {
-        SceneLoader.instance.LoadSceneNow(1);
+        SceneLoader.Instance.LoadSceneNow(1);
     }
 }

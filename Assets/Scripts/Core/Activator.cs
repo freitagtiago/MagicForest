@@ -14,7 +14,7 @@ public class Activator : MonoBehaviour
         {
             active = true;
             //AudioSource.PlayClipAtPoint(audio, Camera.main.transform.position);
-            AudioFXPlayer.fxPlayer.PlaySoundOnCamera(audio);
+            AudioFXPlayer.Instance.PlaySoundOnCamera(audio);
             ParticleSystem particles = GetComponent<ParticleSystem>();
             particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             FindObjectOfType<Quests>().CompleteStep();

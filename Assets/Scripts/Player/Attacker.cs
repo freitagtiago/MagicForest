@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] bool canAttack = true;
-    [SerializeField] float cooldownTime = 1.5f;
-    [SerializeField] GameObject attackPrefab;
-    [SerializeField] Transform handPos;
-    [SerializeField] AudioClip attackSound;
-    BoxCollider2D feetCollider;
-    Animator anim;
+    [SerializeField] private bool _canAttack = true;
+    [SerializeField] private float _cooldownTime = 1.5f;
+    [SerializeField] private GameObject _attackPrefab;
+    [SerializeField] private Transform _handPos;
+    [SerializeField] private AudioClip _attackSound;
+    private BoxCollider2D _feetCollider;
+    private Animator _animator;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        feetCollider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
+        _feetCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
-        if(canAttack && IsGrounded() &&Input.GetKey(KeyCode.N))
+        if(_canAttack 
+            && IsGrounded() 
+            && Input.GetKey(KeyCode.N))
         {
             StartCoroutine(AttackCooldown());
             DoAttack();
@@ -29,28 +31,29 @@ public class Attacker : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return feetCollider.IsTouchingLayers(LayerMask.GetMask("Walkable"));
+        return _feetCollider.IsTouchingLayers(LayerMask.GetMask("Walkable"));
     }
 
     private void DoAttack()
     {
-        anim.SetBool("walking", false);
-        anim.SetBool("running", false);
-        anim.SetTrigger("slashing");
-        AudioSource.PlayClipAtPoint(attackSound, Camera.main.transform.position);
-        GameObject go = Instantiate(attackPrefab, handPos.position, Quaternion.identity);
-        go.transform.parent = handPos;
+        _animator.SetBool("walking", false);
+        _animator.SetBool("running", false);
+        _animator.SetTrigger("slashing");
+
+        AudioSource.PlayClipAtPoint(_attackSound, Camera.main.transform.position);
+        GameObject go = Instantiate(_attackPrefab, _handPos.position, Quaternion.identity);
+        go.transform.parent = _handPos;
     }
 
     private IEnumerator AttackCooldown()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(cooldownTime);
-        canAttack = true;
+        _canAttack = false;
+        yield return new WaitForSeconds(_cooldownTime);
+        _canAttack = true;
     }
 
     public void SetCanAttack(bool value)
     {
-        canAttack = value;
+        _canAttack = value;
     }
 }

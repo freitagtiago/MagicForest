@@ -33,13 +33,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3673774557778395980}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.67, y: -1.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5551348554914964180}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3673774557778395978
 SpriteRenderer:
@@ -52,6 +53,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -94,7 +96,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &3673774557778395981
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,10 +109,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &907483556
 Rigidbody2D:
   serializedVersion: 4
@@ -128,6 +132,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -142,6 +152,25 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: b855feea05f282547888d36b905a001f, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -158,6 +187,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -282,19 +330,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0327e91127c7974a8996ab6f6079429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  verticalInput: 0
-  horizontalInput: 0
-  walkSpeed: 4
-  runSpeed: 7
-  jumpSped: 6
-  audioJump: {fileID: 8300000, guid: b7173700891cb86448de734a666e056b, type: 3}
-  climbSpeed: 3
-  distanceFromMiddleCollider: 0.7
-  topDistanceFromMiddleCollider: 0.2
-  checkRadius: 0.1
-  playerCollider: {fileID: 907483555}
-  feetCollider: {fileID: 1424619907}
+  _playerCollider: {fileID: 907483555}
+  _feetCollider: {fileID: 1424619907}
+  _canMove: 1
+  _verticalInput: 0
+  _horizontalInput: 0
+  _walkSpeed: 4
+  _runSpeed: 7
+  _jumpSped: 6
+  _audioJump: {fileID: 8300000, guid: b7173700891cb86448de734a666e056b, type: 3}
+  _climbSpeed: 3
+  _distanceFromMiddleCollider: 0.7
+  _topDistanceFromMiddleCollider: 0.2
+  _checkRadius: 0.1
 --- !u!114 &5833807543324915051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,12 +355,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cc305e14089cc4485bed0c63807fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathFx: {fileID: 8721633129477516067, guid: 93fcfb7bd4e11cc44b3d321fb69f21a4, type: 3}
-  maxHealth: 3
-  currentHealth: 3
-  invulnerabilityTime: 1.5
-  damagedTime: 0.3
-  audioHurt: {fileID: 8300000, guid: 11555aaf855467242b9b8cc6f26d28d6, type: 3}
+  _deathFx: {fileID: 8721633129477516067, guid: 93fcfb7bd4e11cc44b3d321fb69f21a4, type: 3}
+  _maxHealth: 3
+  _currentHealth: 3
+  _invulnerabilityTime: 1.5
+  _damagedTime: 0.3
+  _audioHurt: {fileID: 8300000, guid: 11555aaf855467242b9b8cc6f26d28d6, type: 3}
 --- !u!114 &6026039221334928383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,11 +373,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d814fa1ce656f443b99d944f6da8840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 1
-  cooldownTime: 1.5
-  attackPrefab: {fileID: 8328088543133351775, guid: aa8b9c67700343046864fff4f9ae6f46, type: 3}
-  handPos: {fileID: 5551348554914964180}
-  attackSound: {fileID: 8300000, guid: b2d9f1a959d4046489e17d2cc0969ea8, type: 3}
+  _canAttack: 1
+  _cooldownTime: 1.5
+  _attackPrefab: {fileID: 8328088543133351775, guid: aa8b9c67700343046864fff4f9ae6f46, type: 3}
+  _handPos: {fileID: 5551348554914964180}
+  _attackSound: {fileID: 8300000, guid: b2d9f1a959d4046489e17d2cc0969ea8, type: 3}
 --- !u!114 &985460753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,8 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bee494e4c403994da5a742e2571cfef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 0.5
-  isPushing: 0
+  _range: 0.5
+  _isPushing: 0
 --- !u!1 &8922247602358621832
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,10 +415,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8922247602358621832}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.465, y: -0.254, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3673774557778395979}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

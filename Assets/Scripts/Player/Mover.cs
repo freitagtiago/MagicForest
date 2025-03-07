@@ -4,45 +4,46 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    Rigidbody2D rig;
-    SpriteRenderer rend;
-    Animator anim;
-    AudioSource audioSource;
+    private Rigidbody2D _rigidBody2d;
+    private SpriteRenderer _renderer;
+    private Animator _animator;
+    private AudioSource _audioSource;
+    [SerializeField] private CapsuleCollider2D _playerCollider;
+    [SerializeField] private BoxCollider2D _feetCollider;
 
-    [SerializeField] bool canMove = true;
+    [SerializeField] private bool _canMove = true;
 
-    [SerializeField] float verticalInput;
-    [SerializeField] float horizontalInput;
+    [SerializeField] private float _verticalInput;
+    [SerializeField] private float _horizontalInput;
     
-    [SerializeField] float walkSpeed = 4f;
-    [SerializeField] float runSpeed = 8f;
-    [SerializeField] float jumpSped = 5f;
+    [SerializeField] private float _walkSpeed = 4f;
+    [SerializeField] private float _runSpeed = 8f;
+    [SerializeField] private float _jumpSped = 5f;
 
-    [SerializeField] AudioClip audioJump;
+    [SerializeField] private AudioClip _audioJump;
 
     [Header("Ladder Movement Config")]
-    [SerializeField] float climbSpeed = 1f;
-    [SerializeField] float distanceFromMiddleCollider = 0.7f;
-    [SerializeField] float topDistanceFromMiddleCollider = 0.3f;
-    [SerializeField] float checkRadius = 0.3f;
-    bool movingOnLadder = false;
+    [SerializeField] private float _climbSpeed = 1f;
+    [SerializeField] private float _distanceFromMiddleCollider = 0.7f;
+    [SerializeField] private float _topDistanceFromMiddleCollider = 0.3f;
+    [SerializeField] private float _checkRadius = 0.3f;
+    private bool _movingOnLadder = false;
 
-    [SerializeField] CapsuleCollider2D playerCollider;
-    [SerializeField] BoxCollider2D feetCollider;
+    
 
     private void Awake()
     {
-        rig = GetComponent<Rigidbody2D>();
-        rend = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        playerCollider = GetComponent<CapsuleCollider2D>();
-        feetCollider = GetComponent<BoxCollider2D>();
+        _rigidBody2d = GetComponent<Rigidbody2D>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        _playerCollider = GetComponent<CapsuleCollider2D>();
+        _feetCollider = GetComponent<BoxCollider2D>();
     }
     
     private void FixedUpdate()
     {
-        if (canMove)
+        if (_canMove)
         {
             GetInputs();
             WalkAndRun();
@@ -54,74 +55,80 @@ public class Mover : MonoBehaviour
 
     private void GetInputs()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
+        _verticalInput = Input.GetAxisRaw("Vertical");
     }
 
     private void ProcessAnimation()
     {
         if (IsGrounded())
         {
-            anim.SetBool("jumping", false);
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+            _animator.SetBool("jumping", false);
+            if (Input.GetKey(KeyCode.RightArrow) 
+                || Input.GetKey(KeyCode.LeftArrow))
             {
-                anim.SetBool("walking", true);
+                _animator.SetBool("walking", true);
                 if (CheckIfIsRunning())
                 {
-                    anim.SetBool("running", true);
+                    _animator.SetBool("running", true);
                 }
                 else
                 {
-                    anim.SetBool("running", false);
+                    _animator.SetBool("running", false);
                 }
             }
             else
             {
-                anim.SetBool("walking", false);
-                anim.SetBool("running", false);
+                _animator.SetBool("walking", false);
+                _animator.SetBool("running", false);
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                anim.SetBool("walking", false);
-                anim.SetBool("running", false);
-                anim.SetBool("jumping", true);
+                _animator.SetBool("walking", false);
+                _animator.SetBool("running", false);
+                _animator.SetBool("jumping", true);
             }
         }
         else
         {
-            anim.SetBool("walking", false);
+            _animator.SetBool("walking", false);
         }
         FlipSprite();
     }
 
     private void WalkAndRun()
     {
-        if(!IsGrounded() || movingOnLadder) { return; }
+        if(!IsGrounded() 
+            || _movingOnLadder) 
+        { 
+            return; 
+        }
 
         float xVelocity = Input.GetAxisRaw("Horizontal");
-        float yVelocity = rig.velocity.y;
+        float yVelocity = _rigidBody2d.velocity.y;
 
         if (CheckIfIsRunning())
         {
-            xVelocity *= runSpeed;
+            xVelocity *= _runSpeed;
         }
         else
         {
-            xVelocity *= walkSpeed;
+            xVelocity *= _walkSpeed;
         }
 
-        rig.velocity = (new Vector2(xVelocity, yVelocity));
+        _rigidBody2d.velocity = (new Vector2(xVelocity, yVelocity));
     }
 
     private void Jump()
     {
         if (!IsGrounded()) 
         {
-            if(movingOnLadder){
+            if(_movingOnLadder)
+            {
                 return;
             }
-            Vector2 jumpVelocity = new Vector2(horizontalInput * walkSpeed, rig.velocity.y);
-            rig.velocity = jumpVelocity;
+            Vector2 jumpVelocity = new Vector2(_horizontalInput * _walkSpeed, _rigidBody2d.velocity.y);
+            _rigidBody2d.velocity = jumpVelocity;
 
             return; 
         }
@@ -129,11 +136,11 @@ public class Mover : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
-            Vector2 jumpVelocity = new Vector2(horizontalInput, jumpSped);
-            rig.velocity = jumpVelocity;
-            if (!audioSource.isPlaying)
+            Vector2 jumpVelocity = new Vector2(horizontalInput, _jumpSped);
+            _rigidBody2d.velocity = jumpVelocity;
+            if (!_audioSource.isPlaying)
             {
-                audioSource.PlayOneShot(audioJump);
+                _audioSource.PlayOneShot(_audioJump);
             }
         }
     }
@@ -142,52 +149,56 @@ public class Mover : MonoBehaviour
     {
         if (!IsOnLadder())
         {
-            anim.SetBool("climbing", false);
-            rig.isKinematic = false;
-            movingOnLadder = false;
+            _animator.SetBool("climbing", false);
+            _rigidBody2d.isKinematic = false;
+            _movingOnLadder = false;
             return;
         }
 
-        bool ladderTop = Physics2D.OverlapCircle(transform.position + new Vector3(0, topDistanceFromMiddleCollider, 0), checkRadius, LayerMask.GetMask("Ladder"));
-        bool ladderBottom = Physics2D.OverlapCircle(transform.position + new Vector3(0, -distanceFromMiddleCollider, 0), checkRadius, LayerMask.GetMask("Ladder"));
+        bool ladderTop = Physics2D.OverlapCircle(transform.position + new Vector3(0, _topDistanceFromMiddleCollider, 0)
+                                                , _checkRadius
+                                                , LayerMask.GetMask("Ladder"));
+        bool ladderBottom = Physics2D.OverlapCircle(transform.position + new Vector3(0, -_distanceFromMiddleCollider, 0)
+                                                    , _checkRadius
+                                                    , LayerMask.GetMask("Ladder"));
 
-        if(verticalInput !=0)
+        if(_verticalInput !=0)
         {
-            rig.isKinematic = true;
-            movingOnLadder = true;
+            _rigidBody2d.isKinematic = true;
+            _movingOnLadder = true;
         }
 
-        if (movingOnLadder)
+        if (_movingOnLadder)
         {
-            if (!ladderTop && verticalInput > 0f)
+            if (!ladderTop && _verticalInput > 0f)
             {
                 FinishClimb();
                 return;
             }
 
-            if (!ladderBottom && verticalInput < 0f)
+            if (!ladderBottom && _verticalInput < 0f)
             {
                 FinishClimb();
                 return;
             }
 
-            anim.SetFloat("yValue", verticalInput);
-            anim.SetBool("jumping", false);
-            anim.SetBool("walking", false);
-            anim.SetBool("running", false);
-            anim.SetBool("climbing", true);
+            _animator.SetFloat("yValue", _verticalInput);
+            _animator.SetBool("jumping", false);
+            _animator.SetBool("walking", false);
+            _animator.SetBool("running", false);
+            _animator.SetBool("climbing", true);
 
-            Vector2 climbVelocity = new Vector2(0, verticalInput * climbSpeed);
-            rig.velocity = climbVelocity;
+            Vector2 climbVelocity = new Vector2(0, _verticalInput * _climbSpeed);
+            _rigidBody2d.velocity = climbVelocity;
         }
     }
 
     private void FinishClimb()
     {
-        movingOnLadder = false;
-        rig.isKinematic = false;
-        anim.SetBool("climbing", false);
-        anim.SetFloat("yValue", 0);
+        _movingOnLadder = false;
+        _rigidBody2d.isKinematic = false;
+        _animator.SetBool("climbing", false);
+        _animator.SetFloat("yValue", 0);
     }
 
     private bool CheckIfIsRunning()
@@ -204,41 +215,41 @@ public class Mover : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return feetCollider.IsTouchingLayers(LayerMask.GetMask("Walkable"));
+        return _feetCollider.IsTouchingLayers(LayerMask.GetMask("Walkable"));
     }
 
     private bool IsOnLadder()
     {
-        return playerCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        return _playerCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
     }
 
     private void FlipSprite()
     {
-        bool isMovingOnHorizontal = Mathf.Abs(rig.velocity.x) > Mathf.Epsilon;
+        bool isMovingOnHorizontal = Mathf.Abs(_rigidBody2d.velocity.x) > Mathf.Epsilon;
         if (isMovingOnHorizontal)
         {
-            transform.localScale = new Vector2(Mathf.Sign(rig.velocity.x),1f);
+            transform.localScale = new Vector2(Mathf.Sign(_rigidBody2d.velocity.x),1f);
         }
     }
     public void SetCanMove(bool value)
     {
-        canMove = value;
+        _canMove = value;
     }
     public void SpecialJump(float impulse)
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         Vector2 jumpVelocity = new Vector2(horizontalInput, impulse);
-        rig.velocity = jumpVelocity;
+        _rigidBody2d.velocity = jumpVelocity;
 
-        if (!audioSource.isPlaying)
+        if (!_audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(audioJump);
+            _audioSource.PlayOneShot(_audioJump);
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0, topDistanceFromMiddleCollider, 0), checkRadius);
-        Gizmos.DrawWireSphere(transform.position + new Vector3(0, -distanceFromMiddleCollider, 0), checkRadius);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0, _topDistanceFromMiddleCollider, 0), _checkRadius);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(0, -_distanceFromMiddleCollider, 0), _checkRadius);
     }
 }

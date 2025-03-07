@@ -36,7 +36,7 @@ public class GameSession : MonoBehaviour
     private IEnumerator ReloadCurrentScene()
     {
         yield return new WaitForSeconds(1.5f);
-        SceneLoader.instance.LoadSceneNow(SceneLoader.instance.GetCurrentActiveScene());
+        SceneLoader.Instance.LoadSceneNow(SceneLoader.Instance.GetCurrentActiveScene());
     }
 
     public void UpdateDisplays()
@@ -47,7 +47,7 @@ public class GameSession : MonoBehaviour
 
     private void ResetGameSession()
     {
-        SceneLoader.instance.LoadSceneNow(0);
+        SceneLoader.Instance.LoadSceneNow(0);
         Destroy(this.gameObject);
     }
 

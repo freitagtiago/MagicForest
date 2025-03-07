@@ -11,7 +11,7 @@ public class CoinPickup : MonoBehaviour
         if (GetComponent<BoxCollider2D>().IsTouchingLayers(LayerMask.GetMask("Player")))
         {
             //AudioSource.PlayClipAtPoint(soundPickup, Camera.main.transform.position);
-            AudioFXPlayer.fxPlayer.PlaySoundOnCamera(soundPickup);
+            AudioFXPlayer.Instance.PlaySoundOnCamera(soundPickup);
             FindObjectOfType<GameSession>().AddCoins();
             Destroy(this.gameObject);
         }

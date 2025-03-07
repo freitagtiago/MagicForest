@@ -1,42 +1,41 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] GameObject deathFx;
-    [SerializeField] int maxHealth;
-    [SerializeField] int currentHealth;
-    [SerializeField] float invulnerabilityTime = 0.6f;
-    [SerializeField] float damagedTime = 0.3f;
-    [SerializeField] AudioClip audioHurt;
+    [SerializeField] private GameObject _deathFx;
+    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _currentHealth;
+    [SerializeField] private float _invulnerabilityTime = 0.6f;
+    [SerializeField] private float _damagedTime = 0.3f;
+    [SerializeField] private AudioClip _audioHurt;
 
-    CapsuleCollider2D playerCollider;
-    Animator anim;
-    UIHandler ui;
-    SpriteRenderer rend;
+    private CapsuleCollider2D _playerCollider;
+    private Animator _animator;
+    private UIHandler _uiHandler;
+    private SpriteRenderer _renderer;
 
-    bool isAlive = true;
-    bool isVulnerable = true;
+    private bool _isAlive = true;
+    private bool _isVulnerable = true;
 
     private void Awake()
     {
-        playerCollider = GetComponent<CapsuleCollider2D>();
-        anim = GetComponent<Animator>();
-        rend = GetComponent<SpriteRenderer>();
-        ui = FindObjectOfType<UIHandler>();
+        _playerCollider = GetComponent<CapsuleCollider2D>();
+        _animator = GetComponent<Animator>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _uiHandler = FindObjectOfType<UIHandler>();
     }
 
     private void Start()
     {
-        ui?.UpdateHealth(currentHealth);
+        _uiHandler?.UpdateHealth(_currentHealth);
     }
 
     private void Update()
     {
-        if (isAlive)
+        if (_isAlive)
         {
-            if (playerCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
+            if (_playerCollider.IsTouchingLayers(LayerMask.GetMask("Hazards")))
             {
                 Die();
             }
@@ -45,65 +44,65 @@ public class PlayerHealth : MonoBehaviour
 
     private void EnableDisableRenderer(bool value)
     {
-        if (isAlive)
+        if (_isAlive)
         {
-            rend.enabled = value;
+            _renderer.enabled = value;
         }
         else
         {
-            rend.enabled = false;
+            _renderer.enabled = false;
         }
         
     }
 
     private IEnumerator InvulnerabilityRoutine()
     {
-        yield return new WaitForSeconds(invulnerabilityTime);
-        isVulnerable = true;
+        yield return new WaitForSeconds(_invulnerabilityTime);
+        _isVulnerable = true;
     }
 
     private IEnumerator DamagedRoutine()
     {
         for(int i = 0; i<= 5; i++)
         {
-            EnableDisableRenderer(!rend.enabled);
-            yield return new WaitForSeconds(damagedTime);
+            EnableDisableRenderer(!_renderer.enabled);
+            yield return new WaitForSeconds(_damagedTime);
         }
         EnableDisableRenderer(true);
     }
 
     public void TakeDamage(int damage)
     {
-        if(!isVulnerable) { return; }
+        if(!_isVulnerable) { return; }
 
-        isVulnerable = false;
+        _isVulnerable = false;
         StartCoroutine(DamagedRoutine());
         StartCoroutine(InvulnerabilityRoutine());
-        if (currentHealth <= 1)
+        if (_currentHealth <= 1)
         {
             Die();
         }
         else
         {
-            AudioSource.PlayClipAtPoint(audioHurt, Camera.main.transform.position);
-            currentHealth--;
+            AudioSource.PlayClipAtPoint(_audioHurt, Camera.main.transform.position);
+            _currentHealth--;
         }
-        ui.UpdateHealth(currentHealth);
+        _uiHandler.UpdateHealth(_currentHealth);
     }
 
     public void Die()
     {
-        isAlive = false;
+        _isAlive = false;
         GetComponent<Mover>().SetCanMove(false);
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<CapsuleCollider2D>().enabled = false;
-        Instantiate(deathFx, transform.position, Quaternion.identity);
+        Instantiate(_deathFx, transform.position, Quaternion.identity);
         FindObjectOfType<GameSession>().ProcessPlayerDeath();
     }
     
     public void Heal(int value)
     {
-        currentHealth = Mathf.Clamp(currentHealth + value, currentHealth, maxHealth);
-        ui.UpdateHealth(currentHealth);
+        _currentHealth = Mathf.Clamp(_currentHealth + value, _currentHealth, _maxHealth);
+        _uiHandler.UpdateHealth(_currentHealth);
     }
 }

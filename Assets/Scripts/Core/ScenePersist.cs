@@ -20,12 +20,12 @@ public class ScenePersist : MonoBehaviour
 
     private void Start()
     {
-        startingSceneIndex = SceneLoader.instance.GetCurrentActiveScene();
+        startingSceneIndex = SceneLoader.Instance.GetCurrentActiveScene();
     }
 
     private void Update()
     {
-        int currentSceneIndex = SceneLoader.instance.GetCurrentActiveScene();
+        int currentSceneIndex = SceneLoader.Instance.GetCurrentActiveScene();
 
         if (currentSceneIndex != startingSceneIndex)
         {
